@@ -1,25 +1,197 @@
-body{
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
-    line-height: 1.6;
+/* Style général */
+* {
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f9;
     color: #333;
-
+    padding: 20px;
 }
 
-.container{
-    width: 80%;
-    margin: auto;
-    padding: 5%;
+/* Container */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
     background-color: #fff;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 8px;
 }
 
-/*Header*/ 
-header{
-    text-align:  center;
-    border-bottom: 2px solid  ;
+/* Header */
+header {
+    text-align: center;
+    border-bottom: 2px solid #4CAF50;
+    padding-bottom: 20px;
+}
+
+header h1 {
+    font-size: 2.2em;
+    color: #4CAF50;
+    margin-bottom: 10px;
+}
+
+header p {
+    font-size: 1.1em;
+    color: #666;
+}
+
+/* Profile Section */
+.profile {
+    margin-top: 20px;
+}
+
+.profile h2 {
+    font-size: 1.8em;
+    margin-bottom: 10px;
+    color: #333;
+    border-bottom: 2px solid #4CAF50;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+.profile p {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+/* Education Section */
+.education {
+    margin-top: 20px;
+}
+
+.education h2 {
+    font-size: 1.8em;
+    margin-bottom: 10px;
+    color: #333;
+    border-bottom: 2px solid #4CAF50;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+.education ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.education li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.education li:last-child {
+    border-bottom: none;
+}
+
+.education li:before {
+    content: "\2022";
+    color: #4CAF50;
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
+
+/* Skills Section */
+.skills {
+    margin-top: 20px;
+}
+
+.skills h2 {
+    font-size: 1.8em;
+    margin-bottom: 10px;
+    color: #333;
+    border-bottom: 2px solid #4CAF50;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+.skills ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.skills li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.skills li:last-child {
+    border-bottom: none;
+}
+
+.skills li:before {
+    content: "\2714";
+    color: #4CAF50;
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
+
+/* Projects Section */
+.project {
+    margin-top: 20px;
+}
+
+.project h2 {
+    font-size: 1.8em;
+    margin-bottom: 10px;
+    color: #333;
+    border-bottom: 2px solid #4CAF50;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+.project ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.project li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.project li:last-child {
+    border-bottom: none;
+}
+
+.project li:before {
+    content: "\1F4BB";
+    color: #4CAF50;
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    header h1 {
+        font-size: 1.8em;
+    }
+
+    header p {
+        font-size: 1em;
+    }
+
+    .profile h2, .education h2, .skills h2, .project h2 {
+        font-size: 1.5em;
+    }
+
+    .profile p, .education li, .skills li, .project li {
+        font-size: 1em;
+    }
 }

@@ -170,7 +170,7 @@ header p {
     font-weight: bold;
     display: inline-block;
     width: 1em;
-    margin-left: -1em;
+    margin-left: 1em;
 }
 
 /* Responsive Design */

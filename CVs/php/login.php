@@ -2,7 +2,7 @@
 session_start();
 require 'data.php'  // Include the database connection file
 
-if ($_SERVER["REQUEST_METHOD"]== "POST"){
+if ($_SERVER["REQUEST_METHOD"]== "POST") {
         $username = $_POST['username'];
         $password = $_POST['password'];
 
@@ -34,7 +34,15 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
         <?php if (isset($error)): ?>
             <p style="color: red;"><?php echo $error; ?> </p>
         <?php endif; ?>
-        <form action="" method="post"></form>
+        <form action="" method="post">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+
+            <input type="submit" value="Login">
+        </form>
 
     </div>
 </body>

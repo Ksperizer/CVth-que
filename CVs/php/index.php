@@ -13,7 +13,7 @@ if ($conn->connect_error) {
 // Vérifier si l'utilisateur est connecté
 $isLoggedIn = isset($_SESSION['user_id']);
 
-// Récupérer les informations de l'utilisateur connecté
+
 if ($isLoggedIn) {
     $userId = $_SESSION['user_id'];
     $sql = "SELECT * FROM users WHERE id = ?";

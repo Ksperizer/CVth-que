@@ -15,35 +15,32 @@ if ($_SERVER["REQUEST_METHOD"]== "POST") {
             $_SESSION['user_id'] = $admin['id'];
             header("Location: index.php");
         } else {
-            echo "Incorrect username or password";
+            echo "Nom d'utilisateur ou mot de passe incorrect";
         }
 }
 ?>
 
-<!DOCTYPE html>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=7, initial-scale=1.0">
     <title>Login</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h2>Admin Log</h2>
-        <?php if (isset($error)): ?>
-            <p style="color: red;"><?php echo $error; ?> </p>
+        <h2>Admin Connexion</h2>
+        <?php if (!empty($error)): ?>
+            <p style="color:red;"><?php echo $error?></p>
         <?php endif; ?>
-        <form action="" method="post">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" required>
 
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required>
+        <form action="login.php" method="post">
+        <label for="username">Nom d'utilisateur</label>
+        <input type="text" id="username" name="username" required>
 
-            <input type="submit" value="Login">
+        <label for="password">Mot de passe</label>
+        <input type="password" id="password" name="password" required>
+
+        <input type="submit" value="Connexion">
         </form>
-
-    </div>
-</body>
-</html>

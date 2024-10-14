@@ -1,30 +1,25 @@
 <?php
-// Démarrage de session pour suivre les utilisateurs connectés
+// start new session
 session_start();
 
-// Connexion à la base de données (ajuste les informations de connexion à ton environnement)
-$bdd = new PDO('mysql:host=localhost;dbname=CV');
-
-// Vérification de la connexion
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+// Include the database connection file
+try {
+    $bdd = new PDO('mysql:host=localhost;dbname=CV', 'username', 'password');
+    $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die('Error: ' . $e->getMessage());
 }
 
-// Vérifier si l'utilisateur est connecté
+
+// Check if the user is logged in
 $isLoggedIn = isset($_SESSION['user_id']);
-
-
-if ($isLoggedIn) {
     $userId = $_SESSION['user_id'];
-    $sql = "SELECT * FROM users WHERE id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $userId);
-    $stmt->execute();
-    $result = $stmt->get_result();
 
-    // Si l'utilisateur existe, on récupère ses données
-    if ($result->num_rows > 0) {
-        $user = $result->fetch_assoc();
+    $stmt = $bdd->prepare("SELECT * FROM users WHERE id = :id");
+    $stmt->execute(['id' => $userId]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($user) {
         $name = $user['name'];
         $firstName = $user['first_name'];
         $title = $user['title'];
@@ -32,12 +27,11 @@ if ($isLoggedIn) {
         $phone = $user['phone'];
         $profileDescription = $user['profile_description'];
     } else {
-        // Gestion d'erreur si l'utilisateur n'existe pas
-        echo "User not found.";
+        echo "Utilisateur non trouvé.";
         exit;
     }
 
-    // Si l'utilisateur soumet le formulaire pour mettre à jour ses informations
+    // Update user information
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $name = $_POST['name'];
         $firstName = $_POST['firstName'];
@@ -46,21 +40,21 @@ if ($isLoggedIn) {
         $phone = $_POST['phone'];
         $profileDescription = $_POST['profileDescription'];
 
-        // Mise à jour des informations dans la base de données
+        // update user information
         $sql = "UPDATE users SET name = ?, lastname= ?,  title = ?, email = ?, phone = ?, profile_description = ? WHERE id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("sssssi", $name, $title, $email, $phone, $profileDescription, $userId);
 
         if ($stmt->execute()) {
-            // Redirection pour éviter la soumission multiple
+            // Redirect to the same page to display the updated information
             header("Location: " . $_SERVER['PHP_SELF']);
             exit;
         } else {
             echo "Error updating record: " . $conn->error;
-        }
+        
     }
 } else {
-    // Rediriger vers la page de connexion si l'utilisateur n'est pas connecté
+    // Redirect to the login page if the user is not logged in
     header("Location: login.php");
     exit;
 }

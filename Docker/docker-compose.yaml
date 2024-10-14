@@ -8,6 +8,9 @@ services:
     volumes:
       - ./services/nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf
       - ../CVs/php:/app
+    depends_on:
+      - app
+    command: /bin/sh -c " echo 'Your website is running on Nginx' && nginx -g 'daemon off;'"
   app:
     build: services/php
     volumes:

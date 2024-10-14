@@ -3,7 +3,7 @@
 session_start();
 
 // Connexion à la base de données (ajuste les informations de connexion à ton environnement)
-$conn = new mysqli("localhost", "username", "password", "database_name");
+$bdd = new PDO('mysql:host=localhost;dbname=CV');
 
 // Vérification de la connexion
 if ($conn->connect_error) {

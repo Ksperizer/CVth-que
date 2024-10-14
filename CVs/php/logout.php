@@ -5,4 +5,5 @@ session_destroy(); // destroy the active session
 
 header("Location: login.php"); // redirect to the login page
 exit(); // stop the script
+
 ?>

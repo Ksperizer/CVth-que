@@ -1,6 +1,5 @@
-CREATE DATABASE CVth - ques 
-
-use CVth - ques
+CREATE DATABASE IF NOT EXISTS 'cv_db';
+USE 'cv_db';
 
 CREATE TABLE 'users' (
     id int AUTOINCREMENT PRIMARY KEY,

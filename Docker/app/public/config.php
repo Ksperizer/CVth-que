@@ -1,7 +1,8 @@
 <?php 
 
+
 // information about the database connection
-$dsn = 'mysql:host=localhost;dbname=cv_db';$charset = 'utf8';
+$dsn = 'mysql:host=db;dbname=cv_db';$charset = 'utf8';
 $username = 'root';
 $password = 'root';
 $options = [

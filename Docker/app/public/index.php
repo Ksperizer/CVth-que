@@ -7,7 +7,7 @@ require 'config.php'; // Assurez-vous que le chemin vers config.php est correct
 
 // check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
+    header("Location: home.php");
     exit;
 }
 
@@ -50,10 +50,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Erreur lors de la mise à jour des informations.";
     }
 }
-?>
-
-<?php 
-echo "Hello World";
 ?>
 
 <!DOCTYPE html>

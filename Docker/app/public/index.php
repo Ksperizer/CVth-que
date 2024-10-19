@@ -1,10 +1,7 @@
 <?php
 
 session_start();
-
-//include file bdd connexion
-require 'config.php'; 
-require '../src/rooter.php';
+require __DIR__ . '/../src/rooter.php';
 
 //Create a new instance of the Rooter class
 $router = new Rooter();

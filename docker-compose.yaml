@@ -20,7 +20,7 @@ services:
     container_name: php
     volumes:
       - ./Docker/app/public:/var/www/html/public 
-      - ./src:/var/www/html/src
+      - ./Docker/app/src:/var/www/html/src
     expose:
       - "9000"
 

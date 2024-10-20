@@ -3,7 +3,7 @@
 session_start();
 
 //include file bdd connexion
-require 'config.php'; // Assurez-vous que le chemin vers config.php est correct
+require 'config.php'; 
 
 // check if the user is logged in
 if (!isset($_SESSION['user_id'])) {

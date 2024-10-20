@@ -1,9 +1,20 @@
 <?php
 
 session_start();
+require __DIR__ . '/../src/rooter.php';
 
-//include file bdd connexion
-require 'config.php'; 
+//Create a new instance of the Rooter class
+$router = new Rooter();
+
+// ajust handle
+
+$router->add('/home', function(){
+    include_once'../src/rooter.php';
+});
+
+
+// execute the run method
+$router->run();
 
 // check if the user is logged in
 if (!isset($_SESSION['user_id'])) {

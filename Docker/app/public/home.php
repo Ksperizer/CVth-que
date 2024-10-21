@@ -20,7 +20,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
     <!--  Navigation -->
     <nav>
         <ul>
-            <li><a href="#accueil">Accueil</a></li>
+            <li><a href="#home.php">Accueil</a></li>
             <li><a href="#cv">CV</a></li>
             <?php if ($isLoggedIn): ?>
                 <li><a href="logout.php">Déconnexion</a></li>

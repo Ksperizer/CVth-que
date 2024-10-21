@@ -1,6 +1,6 @@
-<?php
+<!-- <?php
 
-// Database connection
+/*
 $host = "data";
 $data = "cv_data";
 $user = "root";
@@ -19,3 +19,4 @@ try{
 } catch (PDOException $e){
     throw new PDOException($e->getMessage(), (int)$e->getCode());
 }
+*/

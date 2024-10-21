@@ -1,11 +1,12 @@
 <?php
-session_start();
-
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 // Détruire la session pour déconnecter l'utilisateur
 session_unset();
 session_destroy();
 
-$success = true; // Déclenche le modal de succès
+$success = true; 
 ?>
 
 <!DOCTYPE html>
@@ -76,10 +77,9 @@ $success = true; // Déclenche le modal de succès
         <?php if ($success): ?>
             
             document.getElementById("successModal").style.display = "flex";
-
             // await 5 seconds before redirecting to login page
             setTimeout(function() {
-                window.location.href = "login.php";
+                window.location.href = "home.php";
             }, 5000);
         <?php endif; ?>
     </script>

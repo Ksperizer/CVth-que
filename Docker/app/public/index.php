@@ -27,6 +27,9 @@ switch ($request) {
     case '/cv' :
         require __DIR__ . 'cv.php';
         break;
+    case '/index' :
+        require __DIR__ . '/index.php';
+        break;
     default:
         http_response_code(404);
         require __DIR__ . '/404.php';

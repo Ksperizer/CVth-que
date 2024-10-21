@@ -8,6 +8,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
 
 $error = '';
 $success = false;
+$passwordError = false;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
@@ -19,12 +20,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($user && password_verify($password, $user['password'])) {
         $_SESSION['user_id'] = $user['id'];
-        $success = true; // if successful, show success modal
+        $success = true; // modal pop up
     } else {
         $error = "Email ou mot de passe incorrect.";
+        $passwordError = true;
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -34,20 +37,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Connexion</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="home.css">
+    <!-- <link rel="stylesheet" href="login.css"> -->
 </head>
 <body>
-
-    <!-- Navigation Bar -->
-    <div class="navbar">
-        <ul>
-            <li><a href="index.php">Accueil</a></li>
-            <li><a href="cv.php">CV</a></li>
-            <li><a href="contact.php">Contact</a></li>
-            <li><a href="<?php echo $isLoggedIn ? 'logout.php' : 'login.php'; ?>">
-                <?php echo $isLoggedIn ? 'Déconnexion' : 'Connexion'; ?>
-            </a></li>
-        </ul>
-    </div>
+    <!--  Navigation -->
+        <nav>
+            <ul>
+                <li><a href="#home.php">Accueil</a></li>
+                <li><a href="#cv">CV</a></li>
+                <?php if ($isLoggedIn): ?>
+                    <li><a href="logout.php">Déconnexion</a></li>
+                <?php else: ?>
+                    <li><a href="#connexion" id="connexionBtn">Connexion</a></li>
+                <?php endif; ?>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
 
     <!-- Container for login -->
     <div class="container">
@@ -74,13 +79,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
 
         <!-- Modal de succès -->
-        <div id="successModal" class="modal">
-            <div class="modal-content">
-                <span class="close" id="closeModal">&times;</span>
-                <h2>Connexion réussie !</h2>
-                <p>Vous serez redirigé vers l'accueil dans quelques secondes...</p>
+        <?php if ($success): ?>
+            <div id="successModal" class="modal" style:"display : flex;">
+                <div class="modal-content">
+                    <span class="close" id="closeModal"></span>
+                    <h2>Connexion réussie</h2>
+                    <p>Vous allez être redirigé vers la page d'accueil.</p>
+                </div>
             </div>
-        </div>
+        <?php endif; ?>
     </div>
 
     <script>

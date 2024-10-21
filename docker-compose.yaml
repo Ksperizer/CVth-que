@@ -21,9 +21,6 @@ services:
     volumes:
       - ./Docker/app/public:/var/www/html/public
       - ./Docker/app/src:/var/www/html/src
-      - ./vendor:/var/www/html/vendor
-      - ./composer.json:/var/www/html/composer.json
-      - ./composer.lock:/var/www/html/composer.lock
     expose:
       - "9000"
     depends_on:

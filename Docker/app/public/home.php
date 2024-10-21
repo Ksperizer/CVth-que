@@ -11,7 +11,8 @@ $isLoggedIn = isset($_SESSION['user_id']);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../static/style/home.css"> 
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="home.css"> 
 
     <title>CVthèque - Accueil</title>
 </head> 
@@ -42,24 +43,27 @@ $isLoggedIn = isset($_SESSION['user_id']);
         <p>Explorez les CVs des personnes enregistrées.</p>
     </section>
 
-    <!-- Connexion Modal (Visible seulement si l'utilisateur n'est pas connecté) -->
-    <?php if (!$isLoggedIn): ?>
-        <div id="connexionModal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Connexion</h2>
-                <form action="login.php" method="POST">
-                    <label for="email">Email :</label>
-                    <input type="email" id="email" name="email" required>
+  <!-- Connexion Modal -->
+<?php if (!$isLoggedIn): ?>
+    <div id="connexionModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Connexion</h2>
+            <form action="login.php" method="POST">
+                <label for="email">Email :</label>
+                <input type="email" id="email" name="email" required>
 
-                    <label for="password">Mot de passe :</label>
-                    <input type="password" id="password" name="password" required>
+                <label for="password">Mot de passe :</label>
+                <input type="password" id="password" name="password" required>
 
-                    <button type="submit">Se connecter</button>
-                </form>
+                <button type="submit" class="btn">Se connecter</button>
+            </form>
+            <div class="signup-link">
+                <p>Pas encore inscrit ? <a href="register.php">S'inscrire</a></p>
             </div>
         </div>
-    <?php endif; ?>
+    </div>
+<?php endif; ?>
 
     <!-- Section Contact -->
     <section id="contact">
@@ -101,6 +105,23 @@ $isLoggedIn = isset($_SESSION['user_id']);
                 modal.style.display = "none";
             }
         }
+
+        document.addEventListener('DOMContentLoaded', function () {
+    var modal = document.getElementById("connexionModal");
+    var span = document.getElementsByClassName("close")[0];
+
+    modal.style.display = "block";
+
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+});
     </script>
 
 </body>

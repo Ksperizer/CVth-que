@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD']== "POST"){
         $hasedPassword = password_hash($password, PASSWORD_DEFAULT);
 
         try{
-            $stmt = $bdd->prepare("INSERT INTO user(username, firstName, lasstName, email, password) VALUEs(:username, :firstName, :lastName, :email, :password)");
+            $stmt = $bdd->prepare("INSERT INTO users(username, firstName, lastName, email, password) VALUES(:username, :firstName, :lastName, :email, :password)");
             $stmt->execute([
             'username' => $username,
             'firstName' => $firstName,
@@ -55,6 +55,7 @@ if ($_SERVER['REQUEST_METHOD']== "POST"){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="register.css">
     <title>Inscription - CVth-que</title>
 </head>

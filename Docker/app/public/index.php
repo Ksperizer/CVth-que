@@ -1,24 +1,19 @@
 <?php
-
 session_start();
-require __DIR__ . '/../src/rooter.php';
 
-//Create a new instance of the Rooter class
-$router = new Rooter();
-
-// ajust handle
-
-$router->add('/home', function(){
-    include_once'../src/rooter.php';
-});
-
-
-// execute the run method
-$router->run();
+// Connect to the database 
+try {
+    $bdd = new PDO('mysql:host=;dbname=cv_db;charset=utf8', 'root', 'root', [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    ]);
+} catch (Exception $e) {
+    die('Erreur : ' . $e->getMessage());
+}
 
 // check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
-    header("Location: home.php");
+    header("Location: /home.php");
     exit;
 }
 
@@ -69,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Curriculum Vitae</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="./home.css">
 </head>
 <body>
     <div class="container">

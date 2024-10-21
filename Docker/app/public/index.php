@@ -1,5 +1,37 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+$request = $_SERVER['REQUEST_URI'];
+
+switch ($request) {
+    case '/' :
+        require __DIR__ . '/home.php';
+        break;
+    case '/register' :
+        require __DIR__ . '/register.php';
+        break;
+    case '/login' :
+        require __DIR__ . '/login.php';
+        break;
+    case '/profile' :
+        require __DIR__ . '/profile.php';
+        break;
+    case '/logout' :
+        require __DIR__ . '/logout.php';
+        break;
+    case '/404' :
+        require __DIR__ . '/404.php';
+        break;
+    case '/cv' :
+        require __DIR__ . 'cv.php';
+        break;
+    default:
+        http_response_code(404);
+        require __DIR__ . '/404.php';
+        break;
+}
 
 // Connect to the database 
 try {
@@ -64,7 +96,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Curriculum Vitae</title>
-    <link rel="stylesheet" href="./home.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="home.css">
 </head>
 <body>
     <div class="container">

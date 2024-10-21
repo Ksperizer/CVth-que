@@ -1,8 +1,8 @@
 <?php
-// Démarrer la session
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-// Vérifier si l'utilisateur est déjà connecté
 $isLoggedIn = isset($_SESSION['user_id']);
 ?>
 
@@ -45,11 +45,11 @@ $isLoggedIn = isset($_SESSION['user_id']);
 
   <!-- Connexion Modal -->
 <?php if (!$isLoggedIn): ?>
-    <div id="connexionModal" class="modal">
+    <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Connexion</h2>
-            <form action="login.php" method="POST">
+            <form method="POST" action="login.php">
                 <label for="email">Email :</label>
                 <input type="email" id="email" name="email" required>
 
@@ -57,10 +57,9 @@ $isLoggedIn = isset($_SESSION['user_id']);
                 <input type="password" id="password" name="password" required>
 
                 <button type="submit" class="btn">Se connecter</button>
+
+                <button type="submit" id="registerBtn" class="btn">S'inscrire</button>
             </form>
-            <div class="signup-link">
-                <p>Pas encore inscrit ? <a href="register.php">S'inscrire</a></p>
-            </div>
         </div>
     </div>
 <?php endif; ?>
@@ -82,46 +81,29 @@ $isLoggedIn = isset($_SESSION['user_id']);
         </form>
     </section>
 
-    <!-- Script JS pour gérer les modals -->
+    
     <script>
         // Modal Connexion
-        var modal = document.getElementById("connexionModal");
+        var modal = document.getElementById("myModal");
         var btn = document.getElementById("connexionBtn");
         var span = document.getElementsByClassName("close")[0];
+        document.getElementById("registerBtn").onclick = function() {
+            window.location.href = "register.php";
+        }
 
-        // Ouvrir le modal
         btn.onclick = function() {
             modal.style.display = "block";
         }
 
-        // Fermer le modal
         span.onclick = function() {
             modal.style.display = "none";
         }
 
-        // Fermer le modal si l'utilisateur clique en dehors
         window.onclick = function(event) {
             if (event.target == modal) {
                 modal.style.display = "none";
             }
         }
-
-        document.addEventListener('DOMContentLoaded', function () {
-    var modal = document.getElementById("connexionModal");
-    var span = document.getElementsByClassName("close")[0];
-
-    modal.style.display = "block";
-
-    span.onclick = function () {
-        modal.style.display = "none";
-    }
-
-    window.onclick = function (event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
-});
     </script>
 
 </body>

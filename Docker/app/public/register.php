@@ -41,11 +41,13 @@ if ($_SERVER['REQUEST_METHOD']== "POST"){
             'password' => $hasedPassword
         ]);
 
+        //Redirect 
+        $_SESSION['message'] = 'Inscription réussie! Vous pouvez vous connecter';
         header("Location: login.php");
         exit;
-        }catch (PDOException $e){
-            $error[] = "Erreur lors de l'inscription: " . $e->getMessage();
-        }
+    }catch (PDOException $e){
+        $error[] = "Erreur lors de l'inscription: " . $e->getMessage();
+    }
     }
 }
 ?>
@@ -55,43 +57,46 @@ if ($_SERVER['REQUEST_METHOD']== "POST"){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription - CVth-que</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="register.css">
-    <title>Inscription - CVth-que</title>
 </head>
 <body>
-    <h2>Enregistrement</h2>
-    <?php if (!empty($error)): ?>
-        <div class="errors">
-            <ul>
-                <?php foreach ($error as $e): ?>
-                    <li><?php echo htmlspecialchars($e); ?></li>
-                <?php endforeach; ?>
-            </ul>
-        </div>
-    <?php endif; ?>
+<div class="container">
+        <h2>Enregistrement</h2>
+        <!-- Error Spec -->
+        <?php if (!empty($error)): ?>
+            <div class="errors">
+                <ul>
+                    <?php foreach ($error as $e): ?>
+                        <li><?php echo htmlspecialchars($e); ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        <?php endif; ?>
 
-    <form action="register.php" method="post">
-        <label for="username"> Nom d'utilisateur</label>
-        <input type="text" id="username" name="username" required>
+        <!-- Register form -->
+        <form action="register.php" method="post">
+            <label for="username">Nom d'utilisateur</label>
+            <input type="text" id="username" name="username" required>
 
-        <label for="firstName">Prénom</label>
-        <input type="text" id="firstName" name="firstName" required>
+            <label for="firstName">Prénom</label>
+            <input type="text" id="firstName" name="firstName" required>
 
-        <label for="lastName">Nom</label>
-        <input type="text" id="lastName" name="lastName" required>
+            <label for="lastName">Nom</label>
+            <input type="text" id="lastName" name="lastName" required>
 
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
 
-        <label for="password">Mot de passe</label>  
-        <input type="password" id="password" name="password" required>
+            <label for="password">Mot de passe</label>  
+            <input type="password" id="password" name="password" required>
 
-        <label for="passwordConfirm">Confirmer le mot de passe</label>
-        <input type="password" id="passwordConfirm" name="passwordConfirm" required>
+            <label for="passwordConfirm">Confirmer le mot de passe</label>
+            <input type="password" id="passwordConfirm" name="passwordConfirm" required>
 
-        <button type="submit">S'inscrire</button>
-    </form>
-    
+            <button type="submit">S'inscrire</button>
+        </form>
+    </div>
 </body>
 </html>

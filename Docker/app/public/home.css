@@ -56,6 +56,67 @@ section {
     margin: 0 auto;
 }
 
+/* caroussel */
+.carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.carouselTrack {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 100%;
+}
+
+.carouselItem {
+    flex: 0 0 20%;
+    text-align: center;
+    padding: 10px;
+}
+
+.cvIcon{
+    width: 50px;
+    height: 50px;
+}
+
+.prev, .next {
+    background-color: transparent;
+    border: none;
+    font-size: 30px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}
+
+.carouselItem.empty {
+    background-color: #f4f4f4;
+    text-align: center;
+    border: 1px dashed #ccc;
+    padding: 20px;
+}
+
+.cvIcon.empty {
+    width: 50px;
+    height: 50px;
+    background-color: #e0e0e0;
+    margin: 10px auto;
+    border-radius: 50%;
+}
+
 /* Formulaires */
 form {
     max-width: 400px;

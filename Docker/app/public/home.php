@@ -3,7 +3,18 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+require './config.php';
+
 $isLoggedIn = isset($_SESSION['user_id']);
+
+$stmt = $bdd->prepare( "SELECT CV.fileName, CV.filePath, users.username
+                        FROM CV 
+                        INNER JOIN users ON CV.user_id = users.id
+                        ORDER BY CV.uploaded_at DESC
+                        LIMIT 6");
+$stmt->execute();
+$recentCvs = $stmt->fetchAll();
+$emptyBoxes = 6 - count($recentCvs);
 ?>
 
 <!DOCTYPE html>
@@ -13,23 +24,31 @@ $isLoggedIn = isset($_SESSION['user_id']);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="home.css"> 
+    <script src="home.js"></script>
 
     <title>CVthèque - Accueil</title>
 </head> 
 <body>
     <!--  Navigation -->
-    <nav>
-        <ul>
-            <li><a href="#home.php">Accueil</a></li>
-            <li><a href="#cv">CV</a></li>
-            <?php if ($isLoggedIn): ?>
-                <li><a href="logout.php">Déconnexion</a></li>
-            <?php else: ?>
-                <li><a href="#connexion" id="connexionBtn">Connexion</a></li>
-            <?php endif; ?>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
+<nav>
+    <ul>
+        <?php if ($isLoggedIn): ?>  <!-- Afficher uniquement si l'utilisateur est connecté -->
+            <li><a href="profil.php">Profil</a></li>
+        <?php endif; ?>
+        
+        <li><a href="home.php">Accueil</a></li>
+        <li><a href="cv.php">CV</a></li>
+        
+        <?php if ($isLoggedIn): ?>
+            <li><a href="logout.php">Déconnexion</a></li>
+        <?php else: ?>
+            <li><a href="login.php">Connexion</a></li>
+        <?php endif; ?>
+        
+        <li><a href="contact.php">Contact</a></li>
+    </ul>
+</nav>
+
 
     <!--  Accueil -->
     <section id="accueil">
@@ -39,9 +58,33 @@ $isLoggedIn = isset($_SESSION['user_id']);
 
     <!-- CV -->
     <section id="cv">
-        <h2>Consultez les CVs</h2>
-        <p>Explorez les CVs des personnes enregistrées.</p>
-    </section>
+    <h2>Consultez les CVs</h2>
+    <p>Explorez les CVs des personnes enregistrées.</p>
+    <!-- Carousel -->
+    <div class="carousel">
+        <button class="prev">Précédent</button>
+        <div class="carouselTrack">
+            <?php foreach ($recentCvs as $CV): ?>
+                <div class="carouselItem">
+                    <h3><?php echo htmlspecialchars($CV['username']); ?></h3>
+                    <a href="<?php echo htmlspecialchars($CV['file_path']); ?>" target="_blank">
+                        <img src="pdfIcon.png" alt="pdfIcon" class="cvIcon">
+                    </a>
+                    <p><a href="<?php echo htmlspecialchars($CV['file_path']); ?>" target="_blank">Télécharger</a></p>
+                </div>
+            <?php endforeach; ?>
+            <?php for ($i = 0; $i < $emptyBoxes; $i++): ?>
+                <div class="carouselItem empty">
+                    <h3>CV indisponible</h3>
+                    <div class="cvIcon empty"></div>
+                    <p>Pas de CV à afficher</p>
+                </div>
+            <?php endfor; ?>
+        </div>
+        <button class="next">Suivant</button>
+    </div>
+</section>
+
 
   <!-- Connexion Modal -->
 <?php if (!$isLoggedIn): ?>
@@ -82,29 +125,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
     </section>
 
     
-    <script>
-        // Modal Connexion
-        var modal = document.getElementById("myModal");
-        var btn = document.getElementById("connexionBtn");
-        var span = document.getElementsByClassName("close")[0];
-        document.getElementById("registerBtn").onclick = function() {
-            window.location.href = "register.php";
-        }
-
-        btn.onclick = function() {
-            modal.style.display = "block";
-        }
-
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-    </script>
+   
 
 </body>
 </html>

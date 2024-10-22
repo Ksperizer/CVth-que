@@ -77,7 +77,7 @@ Les informations de connexion sont dans le fichier docker-compose.yml :
  Créez un compte et connectez-vous.
 
 **Téléchargement de CV 📄 :**
-Une fois connecté, vous pouvez télécharger votre CV (PDF uniquement) sur la page dédiée.
+Une fois connecté, vous pouvez télécharger votre CV (PDF uniquement/option vendor avenir) sur la page dédiée.
 
 **Carrousel des CVs 🎠 :**
 Consultez les CVs récemment ajoutés directement depuis la page d'accueil.

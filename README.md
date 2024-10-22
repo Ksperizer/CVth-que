@@ -1,29 +1,99 @@
-**CVth-que**
+**🎓 CVthèque**
+Bienvenue dans CVthèque, une application web interactive permettant aux utilisateurs de gérer, partager et explorer des CVs professionnels. 📄✨
 
-Ce projet vise à créer une bibliothèque en ligne de curriculum vitae, permettant aux utilisateurs de visualiser, gérer et partager des CVs professionnels.
+**📁 Structure du Projet**
 
-**Structure du Projet**
-CV : Dossier contenant les fichiers pour la page d'accueil où votre CV est affiché.
-CVs : Dossier pour stocker des exemples ou des modèles de CV.
-Docker : Configuration pour le déploiement du projet avec Docker.
-bdd.sql : Script SQL pour créer la base de données nécessaire au projet.
-Fonctionnalités
-Page d'Accueil (CV)
-La page d'accueil doit afficher votre CV personnel. Assurez-vous que cette page est bien structurée et présente votre parcours de manière claire et professionnelle.
+/CVth-que
+│
+├── Docker/
+│   ├── services/
+│   │   ├── php/
+│   │   │   └── Dockerfile          # Configuration Docker pour PHP
+│   └── docker-compose.yml          # Configuration Docker Compose pour orchestrer les services
+│
+├── Docker/app/
+│   ├── public/                     # Fichiers accessibles publiquement (index.php, etc.)
+│   ├── src/                        # Code source de l'application
+│   └── vendor/                     # Dépendances PHP (gérées via Composer)
+│
+├── composer.json                   # Dépendances PHP
+├── bdd.sql                         # Script pour la base de données
+└── README.md                       # Documentation du projet
 
-**Portfolio**
-Créez une page portfolio.html dans le dossier CV, où vous pouvez présenter des projets ou des réalisations significatives. Cette page devra tirer les informations des projets depuis une base de données ou des fichiers statiques selon votre architecture.
+**🌟 Fonctionnalités principales**
 
-**Gestion des Utilisateurs**
-Développez une page register.html pour permettre la création de nouveaux utilisateurs. Cette fonctionnalité devra intégrer un formulaire de saisie et interagir avec une base de données pour stocker les informations des utilisateurs.
+# Page d'accueil - CV 🏠 : 
+Affiche votre CV personnel et permet d'explorer les CVs récents via un carrousel.
 
-**Installation et Configuration**
-Base de Données
-Exécutez le script bdd.sql pour créer votre base de données. Assurez-vous de configurer correctement votre environnement pour accéder à cette base de données.
+# Téléchargement de CV 📥 :
+ Permet de télécharger et convertir automatiquement des fichiers Word en PDF.
 
-**Docker**
-Utilisez le fichier Dockerfile dans le dossier Docker pour construire et lancer votre application dans un conteneur Docker.
+# Gestion des utilisateurs 👤 :
+ Inscription, connexion et déconnexion des utilisateurs avec des formulaires simples.
 
-**Contribution**
-Les contributions à ce projet sont bienvenues. Veuillez suivre les conventions de code standard et soumettre des pull requests pour toute proposition de modification.
+# Profil utilisateur 📝 :
+ Consultez et modifiez vos informations personnelles et téléchargez votre CV.
 
+# Portefeuille de projets 💼 : 
+Présentez vos projets professionnels avec une gestion basée sur une base de données.
+
+# Carrousel des CVs récents 🔄 :
+ Explorez les 6 derniers CVs téléchargés.
+
+**⚙️ Installation et configuration**
+# Prérequis
+- PHP 8.1+ 🐘
+- Docker 🐳
+- Composer 📦 (gestionnaire de dépendances PHP)
+
+# Étapes d'installation
+Clonez le dépôt :
+
+git clone https://github.com/votre-utilisateur/CVth-que.git
+cd CVth-que
+
+# Installez les dépendances Composer :
+
+# composer install
+Lancez l'application avec Docker :
+
+docker-compose up --build
+Accédez à l'application :
+
+Ouvrez votre navigateur et allez à http://localhost 🚀
+
+Base de données
+Initialisez la base de données :
+
+mysql -u root -p cv_db < bdd.sql
+Les informations de connexion sont dans le fichier docker-compose.yml :
+
+# environment:
+  MYSQL_ROOT_PASSWORD: "root"
+  MYSQL_DATABASE: "cv_db"
+
+** 🚀 Utilisation ** 
+# Inscription/Connexion 👤 :
+ Créez un compte et connectez-vous.
+
+# Téléchargement de CV 📄 : 
+Une fois connecté, vous pouvez télécharger votre CV (PDF uniquement) sur la page dédiée.
+
+# Carrousel des CVs 🎠 : 
+Consultez les CVs récemment ajoutés directement depuis la page d'accueil.
+
+# Profil utilisateur 📝 : 
+Accédez à votre profil pour visualiser ou modifier vos informations personnelles.
+
+**🐳 Déploiement avec Docker** 
+Grâce à Docker, vous pouvez facilement lancer l'application et ses services associés.
+
+docker-compose up --build
+Ce fichier configure 3 services :
+
+Nginx : Serveur web.
+PHP-FPM : Serveur PHP.
+MariaDB : Base de données MySQL.
+
+**📄 Licence**
+Ce projet est sous licence MIT.

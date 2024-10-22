@@ -8,7 +8,6 @@ session_destroy();
 
 $success = true; 
 ?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>

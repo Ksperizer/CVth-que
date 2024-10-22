@@ -26,27 +26,35 @@ Bienvenue dans CVthèque, une application web interactive permettant aux utilisa
 Affiche votre CV personnel et permet d'explorer les CVs récents via un carrousel.
 
 **Téléchargement de CV 📥 :**
+
  Permet de télécharger et convertir automatiquement des fichiers Word en PDF.
 
 **Gestion des utilisateurs 👤 :**
+
  Inscription, connexion et déconnexion des utilisateurs avec des formulaires simples.
 
 **Profil utilisateur 📝 :**
+
  Consultez et modifiez vos informations personnelles et téléchargez votre CV.
 
 **Portefeuille de projets 💼 :**
+
 Présentez vos projets professionnels avec une gestion basée sur une base de données.
 
 **Carrousel des CVs récents 🔄 :**
+
  Explorez les 6 derniers CVs téléchargés.
 
 # ⚙️ Installation et configuration
+
 **Prérequis**
+
 - PHP 8.1+ 🐘
 - Docker 🐳
 - Composer 📦 (gestionnaire de dépendances PHP)
 
 **Étapes d'installation**
+
 Clonez le dépôt :
 
 git clone https://github.com/votre-utilisateur/CVth-que.git

@@ -3,22 +3,7 @@ Bienvenue dans CVthèque, une application web interactive permettant aux utilisa
 
 # 📁 Structure du Projet
 
-/CVth-que
-│
-├── Docker/
-│   ├── services/
-│   │   ├── php/
-│   │   │   └── Dockerfile          # Configuration Docker pour PHP
-│   └── docker-compose.yml          # Configuration Docker Compose pour orchestrer les services
-│
-├── Docker/app/
-│   ├── public/                     # Fichiers accessibles publiquement (index.php, etc.)
-│   ├── src/                        # Code source de l'application
-│   └── vendor/                     # Dépendances PHP (gérées via Composer)
-│
-├── composer.json                   # Dépendances PHP
-├── bdd.sql                         # Script pour la base de données
-└── README.md                       # Documentation du projet
+
 
 # 🌟 Fonctionnalités principales
 

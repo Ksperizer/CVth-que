@@ -1,5 +1,5 @@
 <?php
-// Path: Docker/app/public/config.php
+// Docker/app/public/config.php
 $dsn = 'mysql:host=db;dbname=cv_db;charset=utf8';  
 $username = 'root';
 $password = 'root';
@@ -9,7 +9,7 @@ $options = [
 ];
 
 try {
-    $bdd = new PDO($dsn, $username, $password, $options);  // Connect to the database
+    $bdd = new PDO($dsn, $username, $password, $options);
 } catch (PDOException $e) {
-    die('Erreur de connexion: ' . $e->getMessage());
+    die('Erreur de connexion : ' . $e->getMessage()); 
 }

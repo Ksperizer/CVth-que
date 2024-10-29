@@ -7,8 +7,8 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./services/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
-      - ./Docker/app/public:/var/www/html/public
+      - ./services/nginx/nginx.conf:/etc/nginx/conf.d/default.conf  
+      - ./Docker/public:/var/www/html/public                         
     depends_on:
       - php
       - db
@@ -19,8 +19,9 @@ services:
       dockerfile: Dockerfile
     container_name: php
     volumes:
-      - ./Docker/app/public:/var/www/html/public
-      - ./Docker/app/src:/var/www/html/src
+      - ./Docker/app:/var/www/html/app             
+      - ./Docker/config:/var/www/html/config        
+      - ./Docker/public:/var/www/html/public        
     expose:
       - "9000"
     depends_on:

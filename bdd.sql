@@ -13,11 +13,13 @@ CREATE TABLE IF NOT EXISTS `users` (
 CREATE TABLE IF NOT EXISTS `CV` (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
+    title VARCHAR(50) AFTER fileType,
     fileName VARCHAR(255) NOT NULL,
     filePath VARCHAR(255) NOT NULL,
     fileType VARCHAR(50) NOT NULL, 
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+
     FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE
 );
 
@@ -27,5 +29,45 @@ CREATE TABLE IF NOT EXISTS `Projects` (
     description VARCHAR(200) NOT NULL,
     date DATE NOT NULL,
     user_id INT NOT NULL,
+    FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE
+);
+
+
+CREATE TABLE IF NOT EXISTS 'Educations' (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    cv_id INT NOT NULL,
+    institution VARCHAR(255) NOT NULL,
+    degree VARCHAR(255) NOT NULL,
+    field_of_study VARCHAR(255),
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    FOREIGN KEY (`cv_id`) REFERENCES `CV`(`id`) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS 'Experiences' (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    cv_id INT NOT NULL,
+    company VARCHAR(255) NOT NULL,
+    role VARCHAR(255) NOT NULL,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    FOREIGN KEY (`cv_id`) REFERENCES `CV`(`id`) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS `Loisirs` (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    cv_id INT NOT NULL,
+    hobby VARCHAR(255) NOT NULL,
+    FOREIGN KEY (cv_id) REFERENCES CV(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS 'Coordonnees' (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    city VARCHAR(255) NOT NULL,
+    postal_code VARCHAR(255) NOT NULL,
+    phone VARCHAR(255) NOT NULL,
     FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE
 );

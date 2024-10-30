@@ -1,4 +1,4 @@
-<!-- app/Views/profile.php -->
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Curriculum Vitae</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="assets/home.css">
 </head>
 <body>
     <div class="container">
@@ -15,7 +15,7 @@
             <p><?php echo htmlspecialchars($user['title']); ?></p>
             <p>Email: <?php echo htmlspecialchars($user['email']); ?> | Téléphone: <?php echo htmlspecialchars($user['phone']); ?></p>
             <button id="editBtn">Modifier mes informations</button>
-            <a href="logout.php">Se déconnecter</a>
+            <a href="/logout">Se déconnecter</a>
         </header>
 
         <section class="profile">
@@ -51,6 +51,6 @@
             </div>
         </div>
     </div>
-    <script src="home.js"></script>
+    <script src="js/home.js"></script>
 </body>
 </html>

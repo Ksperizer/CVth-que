@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../public/assets/home.css">
+    <link rel="stylesheet" href="/assets/home.css"> <!-- Ajustement chemin CSS -->
 </head>
 <body>
     <nav>
@@ -13,14 +13,13 @@
             <li><a href="home.php">Accueil</a></li>
             <li><a href="CV.php">CV</a></li>
             <?php if (isset($_SESSION['userId'])): ?>
-                <li><a href="logout.php">Déconnexion</a></li>
+                <li><a href="/logout">Déconnexion</a></li>
             <?php else: ?>
-                <li><a href="login.php" id="connexionBtn">Connexion</a></li>
+                <li><a href="/login" id="connexionBtn">Connexion</a></li>
             <?php endif; ?>
-            <li><a href="contact.php">Contact</a></li>
+            <li><a href="/contact">Contact</a></li>
         </ul>
     </nav>
-   
 
     <div class="container">
         <h2>Connexion</h2>
@@ -31,7 +30,7 @@
             </div>
         <?php endif; ?>
 
-        <form method="POST" action="login.php">
+        <form method="POST" action="/login">
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required>
 
@@ -42,7 +41,7 @@
         </form>
 
         <div class="signup-link">
-            <p>Pas encore inscrit ? <a href="register.php">S'inscrire ici</a></p>
+            <p>Pas encore inscrit ? <a href="/register">S'inscrire ici</a></p>
         </div>
 
         <?php if ($success): ?>
@@ -56,13 +55,13 @@
         <?php endif; ?>
     </div>
 
-    <script>
-        <?php if ($success): ?>
+    <?php if ($success): ?>
+        <script>
             document.getElementById("successModal").style.display = "flex";
             setTimeout(function() {
                 window.location.href = "home.php";
             }, 5000);
-        <?php endif; ?>
-    </script>
+        </script>
+    <?php endif; ?>
 </body>
 </html>

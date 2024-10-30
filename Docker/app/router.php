@@ -10,7 +10,7 @@ $profileController = new ProfileController($bdd);
 $homeController = new HomeController($bdd);
 $cvController = new CvController($bdd);
 
-// Récupération de la route
+
 $request = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 // Routage

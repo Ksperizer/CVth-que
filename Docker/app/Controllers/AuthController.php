@@ -6,13 +6,11 @@ class AuthController
     private $userModel;
     private $errors = [];
 
-    public function __construct($bdd)
-    {
-        $this->userModel = new User($bdd); 
+    public function __construct($bdd){
+        $this->userModel = new User($bdd);
     }
 
-    public function login()
-    {
+    public function login(){
         if (session_status() === PHP_SESSION_NONE) { 
             session_start();
         }
@@ -31,43 +29,39 @@ class AuthController
 
                 if ($user && password_verify($password, $user['password'])) {
                     $_SESSION['userId'] = $user['id'];
-                    $success = true;
+                    header("Location: /profile");  
+                    exit();
                 } else {
                     $error = 'Email ou mot de passe incorrect';
                 }
             }
         }
 
-        require_once __DIR__ . '/../Views/login.php'; 
+        require_once __DIR__ . '/../Views/login.html';
     }
 
-    public function logout()
-    {
+    public function logout(){
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
 
-        // Delete all session variables
         session_unset();
         session_destroy();
         header("Location: /login");
-        exit;
+        exit();
     }
 
-    public function isLoggedIn()
-    {
+    public function isLoggedIn(){
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
         return isset($_SESSION['userId']);
     }
 
-    public function register()
-    {
-        $this->errors = []; 
+    public function register(){
+        $this->errors = [];
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-           
             $username = $_POST['username'];
             $firstName = $_POST['firstName'];
             $lastName = $_POST['lastName'];
@@ -75,7 +69,6 @@ class AuthController
             $password = $_POST['password'];
             $passwordConfirm = $_POST['passwordConfirm'];
 
-            
             if (empty($username) || empty($firstName) || empty($lastName) || empty($email) || empty($password) || empty($passwordConfirm)) {
                 $this->errors[] = "Tous les champs sont obligatoires";
             } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -86,25 +79,23 @@ class AuthController
                 $this->errors[] = "L'adresse email est déjà utilisée";
             }
 
-           
             if (empty($this->errors)) {
                 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
                 $result = $this->userModel->createUser($username, $firstName, $lastName, $email, $hashedPassword);
 
                 if ($result) {
                     header("Location: /login");
-                    exit;
+                    exit();
                 } else {
                     $this->errors[] = "Erreur lors de l'inscription. Veuillez réessayer.";
                 }
             }
         }
 
-        require __DIR__ . '/../Views/register.php';
+        require __DIR__ . '/../Views/register.html';
     }
 
-    public function getErrors()
-    {
+    public function getErrors(){
         return $this->errors;
     }
 }

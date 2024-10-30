@@ -10,34 +10,38 @@ class CvController {
     }
 
     public function upload() {
+        session_start();
+        
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['cvFile'])) {
-            $userId = $_SESSION['user_id']; // get the user id from the session
+            $userId = $_SESSION['user_id']; 
             $fileName = $_FILES['cvFile']['name'];
             $fileTmpName = $_FILES['cvFile']['tmp_name'];
             $fileType = $_FILES['cvFile']['type'];
             $uploadDir = '/uploads/'; 
 
-            // 
-            if (!is_dir(__DIR__ . '/../../public' . $uploadDir)) {
-                mkdir(__DIR__ . '/../../public' . $uploadDir, 0777, true);
+            // Ensure the uploads directory exists
+            $fullUploadDir = __DIR__ . '/../../public' . $uploadDir;
+            if (!is_dir($fullUploadDir)) {
+                mkdir($fullUploadDir, 0777, true);
             }
 
-        
             $filePath = $uploadDir . basename($fileName);
-            $destinationPath = __DIR__ . '/../../public' . $filePath;
+            $destinationPath = $fullUploadDir . basename($fileName);
 
-            // move the file to the upload directory
-            if (move_uploaded_file($fileTmpName, $destinationPath)) {
-                // register the cv file in the database
-                $this->cvModel->uploadCV($userId, $fileName, $filePath, $fileType);
-                $successMessage = "Votre CV a été téléchargé avec succès.";
+            if ($_FILES['cvFile']['error'] === UPLOAD_ERR_OK) {
+                if (move_uploaded_file($fileTmpName, $destinationPath)) {
+                    $this->cvModel->uploadCV($userId, $fileName, $filePath, $fileType);
+                    $successMessage = "Votre CV a été téléchargé avec succès.";
+                } else {
+                    $errorMessage = "Erreur lors du déplacement du fichier téléchargé.";
+                }
             } else {
-                $errorMessage = "Erreur lors du téléchargement du fichier.";
+                $errorMessage = "Erreur de téléchargement du fichier : " . $_FILES['cvFile']['error'];
             }
         }
 
-        // uploder cv file
-        require __DIR__ . '/../Views/upload_cv.php';
+        
+        require __DIR__ . '/../Views/upload_cv.html';
     }
 
     public function showUserCV($userId) {

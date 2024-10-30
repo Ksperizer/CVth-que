@@ -3,18 +3,16 @@ class UserController {
     private $userModel;
 
     public function __construct($bdd) {
-        $this->userModel = new User($bdd); // Utilisation correcte de UserModel
+        $this->userModel = new User($bdd);
     }
 
     public function showProfile() {
-        // Démarrer la session si elle n'est pas déjà active
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
 
-        // Vérification de la session utilisateur
         if (!isset($_SESSION['user_id'])) {
-            header("Location: /login"); // Redirection vers une page de connexion appropriée
+            header("Location: /login"); 
             exit;
         }
 
@@ -26,7 +24,7 @@ class UserController {
             exit;
         }
 
-        require_once __DIR__ . '/../Views/profile.php';
+        require_once __DIR__ . '/../Views/profile.html';
     }
 
     public function updateProfile() {
@@ -41,7 +39,6 @@ class UserController {
                 exit;
             }
 
-            // Récupération et validation des données du formulaire
             $name = $_POST['name'] ?? '';
             $firstName = $_POST['firstName'] ?? '';
             $title = $_POST['title'] ?? '';

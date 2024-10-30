@@ -10,7 +10,7 @@
 <body>
     <nav>
         <ul>
-            <li><a href="home.php">Accueil</a></li>
+            <li><a href="/home">Accueil</a></li>
             <li><a href="CV.php">CV</a></li>
             <?php if (isset($_SESSION['userId'])): ?>
                 <li><a href="/logout">Déconnexion</a></li>
@@ -59,7 +59,7 @@
         <script>
             document.getElementById("successModal").style.display = "flex";
             setTimeout(function() {
-                window.location.href = "home.php";
+                window.location.href = "/home";
             }, 5000);
         </script>
     <?php endif; ?>

@@ -1,5 +1,5 @@
 <?php
-class ModelCV {
+class CvModel {
     private $bdd;
 
     public function __construct($bdd) {

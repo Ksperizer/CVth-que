@@ -6,7 +6,7 @@ class CvController {
     private $cvModel;
 
     public function __construct($bdd) {
-        $this->cvModel = new CV($bdd);
+        $this->cvModel = new CvModel($bdd);
     }
 
     public function upload() {

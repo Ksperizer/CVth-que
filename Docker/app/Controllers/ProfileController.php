@@ -9,7 +9,7 @@ class ProfileController {
     public function __construct($bdd) {
      
         $this->userModel = new User($bdd);
-        $this->cvModel = new CV($bdd);
+        $this->cvModel = new CvModel($bdd);
     }
 
     public function showProfile() {
@@ -31,4 +31,4 @@ class ProfileController {
         require_once __DIR__ . '/../Views/profile.php';
     }
 }
-?>
+

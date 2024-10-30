@@ -17,7 +17,6 @@ class ProfileController {
         }
 
         if (!isset($_SESSION['user_id'])) {
-        
             header("Location: /login");
             exit;
         }
@@ -26,6 +25,6 @@ class ProfileController {
         $user = $this->userModel->getUserById($userId);
         $cv = $this->cvModel->getCVByUserId($userId);
 
-        require_once __DIR__ . '/../Views/profile.php';
+        require_once __DIR__ . '/../Views/profile.html';
     }
 }

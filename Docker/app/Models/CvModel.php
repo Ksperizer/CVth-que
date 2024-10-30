@@ -18,7 +18,7 @@ class CvModel {
     }
 
     public function getCVByUserId($userId) {
-        $stmt = $this->bdd->prepare("SELECT * FROM CV WHERE user_id = :user_id");
+        $stmt = $this->bdd->prepare("SELECT * FROM CV WHERE user_id = :user_id ORDER BY uploaded_at DESC");
         $stmt->execute(['user_id' => $userId]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }

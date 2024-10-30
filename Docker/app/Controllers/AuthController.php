@@ -69,7 +69,7 @@ class AuthController
     public function register(){
         $this->errors = [];
 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $username = $_POST['username'];
             $firstName = $_POST['firstName'];
             $lastName = $_POST['lastName'];
@@ -78,30 +78,38 @@ class AuthController
             $passwordConfirm = $_POST['passwordConfirm'];
 
             if (empty($username) || empty($firstName) || empty($lastName) || empty($email) || empty($password) || empty($passwordConfirm)) {
-                $this->errors[] = "Tous les champs sont obligatoires";
+                $this->errors[] = 'Veuillez remplir tous les champs.';
             } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $this->errors[] = "L'adresse email n'est pas valide";
-            } elseif ($password != $passwordConfirm) {
-                $this->errors[] = "Les mots de passe ne correspondent pas";
+                $this->errors[] = 'Email invalide.';
+            } elseif ($password !== $passwordConfirm) {
+                $this->errors[] = 'Les mots de passe ne correspondent pas.';
             } elseif ($this->userModel->isEmailTaken($email)) {
-                $this->errors[] = "L'adresse email est déjà utilisée";
+                $this->errors[] = 'Email déjà utilisé.';
             }
 
             if (empty($this->errors)) {
                 $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-                $result = $this->userModel->createUser($username, $firstName, $lastName, $email, $hashedPassword);
-
+                $result = $this->userModel->createUser($username, $firstName, $lastName, $email, $passwordConfirm, $hashedPassword);
                 if ($result) {
-                    header("Location: /login");
+                    if (session_status() == PHP_SESSION_NONE) {
+                        session_start();
+                    }
+
+                    $user = $this->userModel->findUserByEmail($email);
+                    $_SESSION['user_id'] = $user['id'];
+
+                    header('Location: /home');
                     exit();
                 } else {
-                    $this->errors[] = "Erreur lors de l'inscription. Veuillez réessayer.";
+                    $this->errors[] = 'Une erreur s\'est produite. Veuillez réessayer.';
                 }
             }
+           
         }
-
         require __DIR__ . '/../Views/register.html';
     }
+    
+
 
     public function getErrors(){
         return $this->errors;

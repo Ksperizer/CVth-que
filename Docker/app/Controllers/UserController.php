@@ -39,7 +39,7 @@ class UserController {
                 exit;
             }
 
-            $name = $_POST['name'] ?? '';
+            $username = $_POST['username'] ?? '';
             $firstName = $_POST['firstName'] ?? '';
             $title = $_POST['title'] ?? '';
             $email = filter_var($_POST['email'] ?? '', FILTER_VALIDATE_EMAIL);
@@ -51,7 +51,7 @@ class UserController {
                 return;
             }
 
-            if ($this->userModel->updateUser($userId, $name, $firstName, $title, $email, $phone, $profileDescription)) {
+            if ($this->userModel->updateUser($userId, $username, $firstName, $title, $email, $phone, $profileDescription)) {
                 header("Location: /profile");
                 exit;
             } else {

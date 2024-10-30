@@ -36,6 +36,13 @@ switch ($request) {
     case '/upload' :
         $cvController->upload(); 
         break;
+    case '/cvForm':
+        require_once __DIR__ . '/Views/cvForm.html';
+        break;      
+        case '/saveCV':
+            $cvController = new CvController($bdd);
+            $cvController->saveCV();
+            break;
     default:
         http_response_code(404);
         require __DIR__ . '/Views/404.html';

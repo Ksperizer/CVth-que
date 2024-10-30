@@ -20,7 +20,7 @@ class CvController {
             // Save personal information in `coordonnees`
             $this->cvModel->savePersonalInfo($userId, $address, $city, $postalCode, $phone);
     
-            // Sauvegarde des informations d'éducation dans `educations`
+            // Save education information in `formations`
             foreach ($_POST['degree'] as $index => $degree) {
                 $institution = $_POST['institution'][$index];
                 $fieldOfStudy = $_POST['fieldOfStudy'][$index];
@@ -44,7 +44,7 @@ class CvController {
             }
     
             // redirect to the profile page
-            header("Location: /profile");
+            header("Location: /cv");
             exit();
         }
     }
@@ -87,6 +87,6 @@ class CvController {
 
     public function showUserCV($userId) {
         $cv = $this->cvModel->getCVByUserId($userId);
-        require __DIR__ . '/../Views/cv.php';
+        require __DIR__ . '/../Views/cv.html';
     }
 }

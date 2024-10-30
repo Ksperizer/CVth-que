@@ -1,45 +1,53 @@
 <?php
 require_once __DIR__ . '/../Models/UserModel.php';
+require_once __DIR__ .'/../../config/database.php';
+
 
 class AuthController
 {
     private $userModel;
-    private $errors = [];
+    private $errors;
+    private $bdd;
 
     public function __construct($bdd){
         $this->userModel = new User($bdd);
+        $this->errors = [];
+        $this->bdd = $bdd;
     }
 
-    public function login(){
+    public function login() {
         if (session_status() === PHP_SESSION_NONE) { 
             session_start();
         }
 
         $error = '';
         $success = false;
+        $passwordError = false;
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
             $password = $_POST['password'];
 
-            if (empty($email) || empty($password)) {
-                $error = 'Veuillez remplir tous les champs';
-            } else {
-                $user = $this->userModel->findUserByEmail($email);
+            $stmt = $this->bdd->prepare("SELECT * FROM users WHERE email = :email");
+            $stmt->execute(['email' => $email]);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                if ($user && password_verify($password, $user['password'])) {
-                    $_SESSION['userId'] = $user['id'];
-                    header("Location: /profile");  
-                    exit();
-                } else {
-                    $error = 'Email ou mot de passe incorrect';
-                }
+            if ($user && password_verify($password, $user['password'])) {
+                $_SESSION['user_id'] = $user['id'];
+                $success = true;
+                header("Location: /home"); 
+                exit();
+            } else {
+                $error = "Email ou mot de passe incorrect.";
+                $passwordError = true;
             }
         }
 
-        require_once __DIR__ . '/../Views/login.html';
+        require_once __DIR__ . '/../Views/login.html'; 
     }
 
+    
+    
     public function logout(){
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
@@ -80,7 +88,7 @@ class AuthController
             }
 
             if (empty($this->errors)) {
-                $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+                $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
                 $result = $this->userModel->createUser($username, $firstName, $lastName, $email, $hashedPassword);
 
                 if ($result) {

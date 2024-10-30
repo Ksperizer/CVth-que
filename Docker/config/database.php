@@ -1,5 +1,5 @@
 <?php
-// Docker/app/public/config.php
+
 $dsn = 'mysql:host=db;dbname=cv_db;charset=utf8';  
 $username = 'root';
 $password = 'root';

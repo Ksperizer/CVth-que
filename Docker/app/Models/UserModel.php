@@ -29,16 +29,15 @@ class User {
         $stmt->execute(['email'=> $email]);
     }
 
-
-
     public function createUser($username, $firstName, $lastName, $email, $password) {
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
         $stmt = $this->bdd->prepare("INSERT INTO users (username, firstName, lastName, email, password) VALUES (:username, :firstName, :lastName, :email, :password)");
         return $stmt->execute([
             'username' => $username,
             'firstName' => $firstName,
             'lastName' => $lastName,
             'email' => $email,
-            'password' => password_hash($password, PASSWORD_BCRYPT)
+            'password' => $hashedPassword
         ]);
     }
 

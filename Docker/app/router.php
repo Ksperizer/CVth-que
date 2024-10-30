@@ -10,12 +10,12 @@ $profileController = new ProfileController($bdd);
 $homeController = new HomeController($bdd);
 $cvController = new CvController($bdd);
 
-
 $request = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 // Routage
 switch ($request) {
     case '/' :
+    case '/home' : 
         $homeController->index();  
         break;
     case '/register' :
@@ -38,6 +38,6 @@ switch ($request) {
         break;
     default:
         http_response_code(404);
-        require __DIR__ . '/Views/404.php';
+        require __DIR__ . '/Views/404.html';
         break;
 }

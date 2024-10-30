@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer mon CV</title>
+    <link rel="stylesheet" href="assets/cv.css">
+</head>
+<body>
+    <h1>Créer mon CV</h1>
+    
+    <form method="POST" action="/save-cv">
+        <h2>Informations personnelles</h2>
+        <label for="name">Nom :</label>
+        <input type="text" id="name" name="name" required>
+        
+        <label for="firstName">Prénom :</label>
+        <input type="text" id="firstName" name="firstName" required>
+        
+        <label for="email">Email :</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="phone">Téléphone :</label>
+        <input type="text" id="phone" name="phone" required>
+
+        <h2>Éducation</h2>
+        <div id="educationSection">
+            <div class="education-entry">
+                <label for="degree">Diplôme :</label>
+                <input type="text" name="degree[]" required>
+                
+                <label for="institution">Institution :</label>
+                <input type="text" name="institution[]" required>
+                
+                <label for="year">Année :</label>
+                <input type="text" name="year[]" required>
+            </div>
+        </div>
+        <button type="button" onclick="addEducation()">Ajouter une éducation</button>
+
+        <h2>Expériences professionnelles</h2>
+        <div id="experienceSection">
+            <div class="experience-entry">
+                <label for="jobTitle">Titre du poste :</label>
+                <input type="text" name="jobTitle[]" required>
+                
+                <label for="company">Entreprise :</label>
+                <input type="text" name="company[]" required>
+                
+                <label for="jobYear">Année :</label>
+                <input type="text" name="jobYear[]" required>
+            </div>
+        </div>
+        <button type="button" onclick="addExperience()">Ajouter une expérience</button>
+
+        <h2>Loisirs</h2>
+        <label for="hobbies">Loisirs :</label>
+        <textarea id="hobbies" name="hobbies"></textarea>
+
+        <input type="submit" value="Enregistrer et générer mon CV">
+    </form>
+
+    <script>
+        function addEducation() {
+            const educationSection = document.getElementById('educationSection');
+            const entry = document.createElement('div');
+            entry.classList.add('education-entry');
+            entry.innerHTML = `
+                <label for="degree">Diplôme :</label>
+                <input type="text" name="degree[]" required>
+                
+                <label for="institution">Institution :</label>
+                <input type="text" name="institution[]" required>
+                
+                <label for="year">Année :</label>
+                <input type="text" name="year[]" required>
+            `;
+            educationSection.appendChild(entry);
+        }
+
+        function addExperience() {
+            const experienceSection = document.getElementById('experienceSection');
+            const entry = document.createElement('div');
+            entry.classList.add('experience-entry');
+            entry.innerHTML = `
+                <label for="jobTitle">Titre du poste :</label>
+                <input type="text" name="jobTitle[]" required>
+                
+                <label for="company">Entreprise :</label>
+                <input type="text" name="company[]" required>
+                
+                <label for="jobYear">Année :</label>
+                <input type="text" name="jobYear[]" required>
+            `;
+            experienceSection.appendChild(entry);
+        }
+    </script>
+</body>
+</html>

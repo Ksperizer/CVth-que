@@ -30,7 +30,7 @@ switch ($request) {
     case '/logout' :
         $authController->logout();  
         break;
-    case '/my-cv' :
+    case '/cv' :
         $cvController->showUserCV($_SESSION['user_id']); 
         break;
     case '/upload' :

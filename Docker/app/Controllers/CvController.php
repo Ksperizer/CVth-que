@@ -9,6 +9,47 @@ class CvController {
         $this->cvModel = new CvModel($bdd);
     }
 
+    public function saveCV() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $userId = $_SESSION['user_id'];
+            $address = $_POST['address'];
+            $city = $_POST['city'];
+            $postalCode = $_POST['postalCode'];
+            $phone = $_POST['phone'];
+            
+            // Save personal information in `coordonnees`
+            $this->cvModel->savePersonalInfo($userId, $address, $city, $postalCode, $phone);
+    
+            // Sauvegarde des informations d'éducation dans `educations`
+            foreach ($_POST['degree'] as $index => $degree) {
+                $institution = $_POST['institution'][$index];
+                $fieldOfStudy = $_POST['fieldOfStudy'][$index];
+                $startDate = $_POST['startDate'][$index];
+                $endDate = $_POST['endDate'][$index];
+                $this->cvModel->saveEducation($userId, $institution, $degree, $fieldOfStudy, $startDate, $endDate);
+            }
+    
+            // Save experience information in `experiences`
+            foreach ($_POST['role'] as $index => $role) {
+                $company = $_POST['company'][$index];
+                $startDate = $_POST['jobStartDate'][$index];
+                $endDate = $_POST['jobEndDate'][$index];
+                $description = $_POST['jobDescription'][$index];
+                $this->cvModel->saveExperience($userId, $company, $role, $startDate, $endDate, $description);
+            }
+    
+            // Save hobbies in `loisirs`
+            foreach ($_POST['hobbies'] as $hobby) {
+                $this->cvModel->saveHobby($userId, $hobby);
+            }
+    
+            // redirect to the profile page
+            header("Location: /profile");
+            exit();
+        }
+    }
+    
+
     public function upload() {
         session_start();
         
@@ -46,6 +87,6 @@ class CvController {
 
     public function showUserCV($userId) {
         $cv = $this->cvModel->getCVByUserId($userId);
-        require __DIR__ . '/../Views/user_cv.php';
+        require __DIR__ . '/../Views/cv.php';
     }
 }

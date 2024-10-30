@@ -4,18 +4,90 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mon CV</title>
+    <link rel="stylesheet" href="assets/cv.css">
 </head>
 <body>
     <h1>Mon CV</h1>
 
+    <!-- Boutons d'action -->
+    <div class="action-buttons">
+        <button onclick="window.location.href='/add-info-form'">Ajouter des Informations</button>
+        <button onclick="window.location.href='/download-cv-pdf'">Télécharger le CV en PDF</button>
+    </div>
+
+    <!-- Section du CV principal -->
     <?php if ($cv): ?>
-        <p>Nom du fichier : <?php echo htmlspecialchars($cv['fileName']); ?></p>
-        <a href="<?php echo htmlspecialchars($cv['filePath']); ?>" target="_blank">Voir le CV</a>
-        <p>Type de fichier : <?php echo htmlspecialchars($cv['fileType']); ?></p>
-        <p>Date d'upload : <?php echo htmlspecialchars($cv['uploaded_at']); ?></p>
+        <section>
+            <h2>Détails du CV</h2>
+            <p><strong>Nom du fichier :</strong> <?php echo htmlspecialchars($cv['fileName']); ?></p>
+            <a href="<?php echo htmlspecialchars($cv['filePath']); ?>" target="_blank">Voir le CV</a>
+            <p><strong>Type de fichier :</strong> <?php echo htmlspecialchars($cv['fileType']); ?></p>
+            <p><strong>Date d'upload :</strong> <?php echo htmlspecialchars($cv['uploaded_at']); ?></p>
+        </section>
     <?php else: ?>
         <p>Vous n'avez pas encore téléchargé de CV.</p>
         <a href="/upload">Télécharger un CV</a>
+    <?php endif; ?>
+
+    <!-- Coordonnées -->
+    <?php if ($coordonnees): ?>
+        <section>
+            <h2>Coordonnées</h2>
+            <p><strong>Nom :</strong> <?php echo htmlspecialchars($coordonnees['firstName']) . ' ' . htmlspecialchars($coordonnees['lastName']); ?></p>
+            <p><strong>Email :</strong> <?php echo htmlspecialchars($coordonnees['email']); ?></p>
+            <p><strong>Téléphone :</strong> <?php echo htmlspecialchars($coordonnees['phone']); ?></p>
+            <p><strong>Adresse :</strong> <?php echo htmlspecialchars($coordonnees['address']) . ', ' . htmlspecialchars($coordonnees['postal_code']) . ' ' . htmlspecialchars($coordonnees['city']); ?></p>
+        </section>
+    <?php endif; ?>
+
+    <!-- Éducation -->
+    <?php if (!empty($educations)): ?>
+        <section>
+            <h2>Éducation</h2>
+            <ul>
+                <?php foreach ($educations as $education): ?>
+                    <li>
+                        <strong><?php echo htmlspecialchars($education['institution']); ?></strong> - <?php echo htmlspecialchars($education['degree']); ?>
+                        <p><em><?php echo htmlspecialchars($education['field_of_study']); ?></em></p>
+                        <p><?php echo htmlspecialchars($education['start_date']) . ' - ' . htmlspecialchars($education['end_date']); ?></p>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </section>
+    <?php else: ?>
+        <p>Aucune information d'éducation enregistrée.</p>
+    <?php endif; ?>
+
+    <!-- Expériences professionnelles -->
+    <?php if (!empty($experiences)): ?>
+        <section>
+            <h2>Expériences professionnelles</h2>
+            <ul>
+                <?php foreach ($experiences as $experience): ?>
+                    <li>
+                        <strong><?php echo htmlspecialchars($experience['company']); ?></strong> - <?php echo htmlspecialchars($experience['role']); ?>
+                        <p><?php echo htmlspecialchars($experience['start_date']) . ' - ' . htmlspecialchars($experience['end_date']); ?></p>
+                        <p><?php echo htmlspecialchars($experience['description']); ?></p>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </section>
+    <?php else: ?>
+        <p>Aucune expérience professionnelle enregistrée.</p>
+    <?php endif; ?>
+
+    <!-- Loisirs -->
+    <?php if (!empty($loisirs)): ?>
+        <section>
+            <h2>Loisirs</h2>
+            <ul>
+                <?php foreach ($loisirs as $loisir): ?>
+                    <li><?php echo htmlspecialchars($loisir['hobby']); ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </section>
+    <?php else: ?>
+        <p>Aucun loisir enregistré.</p>
     <?php endif; ?>
 </body>
 </html>

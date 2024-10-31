@@ -9,7 +9,7 @@ services:
     volumes:
       - ./services/nginx/nginx.conf:/etc/nginx/conf.d/default.conf  
       - ./Docker/public:/var/www/html/public  
-      - ./Views:/var/www/html/Views                       
+      - ./Docker/app/Views:/var/www/html/Views                       
     depends_on:
       - php
       - db

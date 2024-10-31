@@ -12,11 +12,18 @@
     <!-- navigation -->
     <nav>
         <ul>
+            <?php $isLoggedIn = $isLoggedIn ?? false; ?>
+            
+            <?php if ($isLoggedIn): ?>
+                <li><a href="/profile">Profil</a></li>
+                <li><a href="/logout">Déconnexion</a></li>
+            <?php else: ?>
+                <li><a href="/login">Connexion</a></li>
+            <?php endif; ?>
+            
             <li><a href="/home">Accueil</a></li>
-            <li><a href="/profile">Profil</a></li>
             <li><a href="/cv">CV</a></li>
             <li><a href="/contact">Contact</a></li>
-            <li><a href="/logout">Déconnexion</a></li>
         </ul>
     </nav>
 

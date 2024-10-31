@@ -6,9 +6,18 @@ class CvModel {
         $this->bdd = $bdd;
     }
 
-    // save CV
+    // create CV
+    public function createCV($userId) {
+        $stmt = $this->bdd->prepare("INSERT INTO cv (user_id, fileName, filePath, fileType) VALUES (:user_id, '', '', '')");
+        $stmt->execute(['user_id' => $userId]);
+        return $this->bdd->lastInsertId();
+    }
+
     public function uploadCV($userId, $fileName, $filePath, $fileType) {
-        $stmt = $this->bdd->prepare("INSERT INTO cv (user_id, fileName, filePath, fileType) VALUES (:user_id, :fileName, :filePath, :fileType)");
+        $stmt = $this->bdd->prepare("
+            INSERT INTO cv (user_id, fileName, filePath, fileType) 
+            VALUES (:user_id, :fileName, :filePath, :fileType)
+        ");
         return $stmt->execute([
             'user_id' => $userId,
             'fileName' => $fileName,
@@ -16,20 +25,30 @@ class CvModel {
             'fileType' => $fileType
         ]);
     }
-
+    
     // get CV by user ID
     public function getCVByUserId($userId) {
-        $stmt = $this->bdd->prepare("SELECT * FROM cv WHERE user_id = :user_id ORDER BY uploaded_at DESC");
+        if ($userId === null) {
+            throw new Exception("L'utilisateur n'est pas connecté.");
+        }
+
+        $stmt = $this->bdd->prepare("SELECT * FROM cv WHERE user_id = :user_id");
         $stmt->execute(['user_id' => $userId]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $cv = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($cv) {
+            return $cv['id'];
+        } else {
+            // Si le CV n'existe pas, en crée un nouveau
+            return $this->createCV($userId);
+        }
     }
 
-    // delete a CV
+    // delete CV
     public function deleteCV($userId, $fileName) {
         $stmt = $this->bdd->prepare("
             DELETE FROM cv
-            WHERE user_id = :user_id
-            AND fileName = :fileName
+            WHERE user_id = :user_id AND fileName = :fileName
         ");
         $stmt->execute(['user_id' => $userId, 'fileName' => $fileName]);
         return $stmt->rowCount();
@@ -43,7 +62,7 @@ class CvModel {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Save personal information in `coordonnees`
+    // Save personal information
     public function savePersonalInfo($userId, $address, $city, $postalCode, $phone) {
         $stmt = $this->bdd->prepare("
             INSERT INTO coordonnees (user_id, address, city, postal_code, phone) 
@@ -63,7 +82,7 @@ class CvModel {
         ]);
     }
 
-    // Save education information in `educations`
+    // Save education
     public function saveEducation($cvId, $institution, $degree, $fieldOfStudy, $startDate, $endDate) {
         $stmt = $this->bdd->prepare("
             INSERT INTO educations (cv_id, institution, degree, field_of_study, start_date, end_date) 
@@ -79,7 +98,7 @@ class CvModel {
         ]);
     }
 
-    // Save experience information in `experiences`
+    // Save experience
     public function saveExperience($cvId, $company, $role, $startDate, $endDate, $description) {
         $stmt = $this->bdd->prepare("
             INSERT INTO experiences (cv_id, company, role, start_date, end_date, description) 
@@ -95,7 +114,7 @@ class CvModel {
         ]);
     }
 
-    // save hobbies in `loisirs`
+    // Save hobbies
     public function saveHobby($cvId, $hobby) {
         $stmt = $this->bdd->prepare("
             INSERT INTO loisirs (cv_id, hobby) 
@@ -106,4 +125,38 @@ class CvModel {
             'hobby' => $hobby
         ]);
     }
+
+    public function getPersonalInfo($userId) {
+        $stmt = $this->bdd->prepare("SELECT * FROM coordonnees WHERE user_id = :user_id");
+        $stmt->execute(['user_id' => $userId]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    
+    public function getEducationsByCVId($cvId) {
+        if ($cvId) {
+            $stmt = $this->bdd->prepare("SELECT * FROM educations WHERE cv_id = :cv_id");
+            $stmt->execute(['cv_id' => $cvId]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+        return [];
+    }
+    
+    public function getExperiencesByCVId($cvId) {
+        if ($cvId) {
+            $stmt = $this->bdd->prepare("SELECT * FROM experiences WHERE cv_id = :cv_id");
+            $stmt->execute(['cv_id' => $cvId]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+        return [];
+    }
+    
+    public function getHobbiesByCVId($cvId) {
+        if ($cvId) {
+            $stmt = $this->bdd->prepare("SELECT * FROM loisirs WHERE cv_id = :cv_id");
+            $stmt->execute(['cv_id' => $cvId]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+        return [];
+    }
+    
 }

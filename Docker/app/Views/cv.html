@@ -34,13 +34,13 @@
         </div>
 
         <!-- Section du CV principal -->
-        <?php if ($cv): ?>
+        <?php if (!empty($cv)): ?>
             <section class="cv-section">
                 <h2 class="section-title">Détails du CV</h2>
-                <p><strong>Nom du fichier :</strong> <?php echo htmlspecialchars($cv['fileName']); ?></p>
-                <a href="<?php echo htmlspecialchars($cv['filePath']); ?>" target="_blank" class="cv-link">Voir le CV</a>
-                <p><strong>Type de fichier :</strong> <?php echo htmlspecialchars($cv['fileType']); ?></p>
-                <p><strong>Date d'upload :</strong> <?php echo htmlspecialchars($cv['uploaded_at']); ?></p>
+                <p><strong>Nom du fichier :</strong> <?php echo htmlspecialchars($cv['fileName'] ?? ''); ?></p>
+                <a href="<?php echo htmlspecialchars($cv['filePath'] ?? '#'); ?>" target="_blank" class="cv-link">Voir le CV</a>
+                <p><strong>Type de fichier :</strong> <?php echo htmlspecialchars($cv['fileType'] ?? ''); ?></p>
+                <p><strong>Date d'upload :</strong> <?php echo htmlspecialchars($cv['uploaded_at'] ?? ''); ?></p>
             </section>
         <?php else: ?>
             <p class="no-cv">Vous n'avez pas encore téléchargé de CV.</p>
@@ -48,26 +48,26 @@
         <?php endif; ?>
 
         <!-- Coordonnées -->
-        <?php if ($coordonnees): ?>
+        <?php if (!empty($coordonnees) && is_array($coordonnees)): ?>
             <section class="cv-section">
                 <h2 class="section-title">Coordonnées</h2>
-                <p><strong>Nom :</strong> <?php echo htmlspecialchars($coordonnees['firstName']) . ' ' . htmlspecialchars($coordonnees['lastName']); ?></p>
-                <p><strong>Email :</strong> <?php echo htmlspecialchars($coordonnees['email']); ?></p>
-                <p><strong>Téléphone :</strong> <?php echo htmlspecialchars($coordonnees['phone']); ?></p>
-                <p><strong>Adresse :</strong> <?php echo htmlspecialchars($coordonnees['address']) . ', ' . htmlspecialchars($coordonnees['postal_code']) . ' ' . htmlspecialchars($coordonnees['city']); ?></p>
+                <p><strong>Nom :</strong> <?php echo htmlspecialchars($coordonnees['firstName'] ?? '') . ' ' . htmlspecialchars($coordonnees['lastName'] ?? ''); ?></p>
+                <p><strong>Email :</strong> <?php echo htmlspecialchars($coordonnees['email'] ?? ''); ?></p>
+                <p><strong>Téléphone :</strong> <?php echo htmlspecialchars($coordonnees['phone'] ?? ''); ?></p>
+                <p><strong>Adresse :</strong> <?php echo htmlspecialchars($coordonnees['address'] ?? '') . ', ' . htmlspecialchars($coordonnees['postal_code'] ?? '') . ' ' . htmlspecialchars($coordonnees['city'] ?? ''); ?></p>
             </section>
         <?php endif; ?>
 
         <!-- Éducation -->
-        <?php if (!empty($educations)): ?>
+        <?php if (!empty($educations) && is_array($educations)): ?>
             <section class="cv-section">
                 <h2 class="section-title">Éducation</h2>
                 <ul class="education-list">
                     <?php foreach ($educations as $education): ?>
                         <li class="education-item">
-                            <strong><?php echo htmlspecialchars($education['institution']); ?></strong> - <?php echo htmlspecialchars($education['degree']); ?>
-                            <p><em><?php echo htmlspecialchars($education['field_of_study']); ?></em></p>
-                            <p><?php echo htmlspecialchars($education['start_date']) . ' - ' . htmlspecialchars($education['end_date']); ?></p>
+                            <strong><?php echo htmlspecialchars($education['institution'] ?? ''); ?></strong> - <?php echo htmlspecialchars($education['degree'] ?? ''); ?>
+                            <p><em><?php echo htmlspecialchars($education['field_of_study'] ?? ''); ?></em></p>
+                            <p><?php echo htmlspecialchars($education['start_date'] ?? '') . ' - ' . htmlspecialchars($education['end_date'] ?? ''); ?></p>
                         </li>
                     <?php endforeach; ?>
                 </ul>
@@ -77,15 +77,15 @@
         <?php endif; ?>
 
         <!-- Expériences professionnelles -->
-        <?php if (!empty($experiences)): ?>
+        <?php if (!empty($experiences) && is_array($experiences)): ?>
             <section class="cv-section">
                 <h2 class="section-title">Expériences professionnelles</h2>
                 <ul class="experience-list">
                     <?php foreach ($experiences as $experience): ?>
                         <li class="experience-item">
-                            <strong><?php echo htmlspecialchars($experience['company']); ?></strong> - <?php echo htmlspecialchars($experience['role']); ?>
-                            <p><?php echo htmlspecialchars($experience['start_date']) . ' - ' . htmlspecialchars($experience['end_date']); ?></p>
-                            <p><?php echo htmlspecialchars($experience['description']); ?></p>
+                            <strong><?php echo htmlspecialchars($experience['company'] ?? ''); ?></strong> - <?php echo htmlspecialchars($experience['role'] ?? ''); ?>
+                            <p><?php echo htmlspecialchars($experience['start_date'] ?? '') . ' - ' . htmlspecialchars($experience['end_date'] ?? ''); ?></p>
+                            <p><?php echo htmlspecialchars($experience['description'] ?? ''); ?></p>
                         </li>
                     <?php endforeach; ?>
                 </ul>
@@ -95,12 +95,12 @@
         <?php endif; ?>
 
         <!-- Loisirs -->
-        <?php if (!empty($loisirs)): ?>
+        <?php if (!empty($loisirs) && is_array($loisirs)): ?>
             <section class="cv-section">
                 <h2 class="section-title">Loisirs</h2>
                 <ul class="hobbies-list">
                     <?php foreach ($loisirs as $loisir): ?>
-                        <li class="hobby-item"><?php echo htmlspecialchars($loisir['hobby']); ?></li>
+                        <li class="hobby-item"><?php echo htmlspecialchars($loisir['hobby'] ?? ''); ?></li>
                     <?php endforeach; ?>
                 </ul>
             </section>
